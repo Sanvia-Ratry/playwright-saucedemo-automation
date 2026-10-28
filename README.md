@@ -1,4 +1,5 @@
 # Playwright Saucedemo Automation Framework
+[![Playwright Tests](https://github.com/Sanvia-Ratry/playwright-saucedemo-automation/actions/workflows/playwright.yml/badge.svg)](https://github.com/Sanvia-Ratry/playwright-saucedemo-automation/actions/workflows/playwright.yml)
 
 A UI and API test automation framework built with **JavaScript, Playwright Test, and the Page Object Model (POM)**. This project demonstrates maintainable test architecture, reusable fixtures, data-driven testing, and automated browser testing for an e-commerce application.
 

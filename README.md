@@ -96,11 +96,8 @@ The `playwright.config.js` file configures the test directory, browser projects,
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-cd YOUR-REPOSITORY
+gh repo clone Sanvia-Ratry/playwright-saucedemo-automation
 ```
-
-Replace `YOUR-USERNAME/YOUR-REPOSITORY` with your actual GitHub repository path.
 
 ### 2. Install Dependencies
 

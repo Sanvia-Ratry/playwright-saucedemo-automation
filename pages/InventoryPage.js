@@ -5,12 +5,23 @@ class InventoryPage {
     this.cartBadge = page.locator(".shopping_cart_badge");
     this.cartLink = page.locator(".shopping_cart_link");
     this.prices = page.locator(".inventory_item_price");
+    this.names = page.locator(".inventory_item_name");
+    this.menuButton = page.locator("#react-burger-menu-btn");
+    this.logoutLink = page.locator("#logout_sidebar_link");
   }
 
   product(name) {
     return this.page.locator(".inventory_item").filter({ hasText: name });
   }
 
+  async getNames() {
+    return this.names.allTextContents();
+  }
+
+  async logout() {
+    await this.menuButton.click();
+    await this.logoutLink.click();
+  }
   async addToCart(name) {
     await this.product(name).getByRole("button", { name: "Add to cart" }).click();
   }

@@ -9,11 +9,47 @@ test.describe("Inventory", () => {
     await expect(inventoryPage.product("Sauce Labs Bike Light")).toBeVisible();
   });
 
-  test("products can be sorted by price from low to high", async ({ inventoryPage }) => {
-    await inventoryPage.sortBy("lohi");
-    const prices = await inventoryPage.getPrices();
-    expect(prices).toEqual([...prices].sort((a, b) => a - b));
-  });
+  const sortCases = [
+    {
+      option: "az",
+      label: "name A to Z",
+      check: async (p) => {
+        const n = await p.getNames();
+        expect(n).toEqual([...n].sort());
+      },
+    },
+    {
+      option: "za",
+      label: "name Z to A",
+      check: async (p) => {
+        const n = await p.getNames();
+        expect(n).toEqual([...n].sort().reverse());
+      },
+    },
+    {
+      option: "lohi",
+      label: "price low to high",
+      check: async (p) => {
+        const x = await p.getPrices();
+        expect(x).toEqual([...x].sort((a, b) => a - b));
+      },
+    },
+    {
+      option: "hilo",
+      label: "price high to low",
+      check: async (p) => {
+        const x = await p.getPrices();
+        expect(x).toEqual([...x].sort((a, b) => b - a));
+      },
+    },
+  ];
+
+  for (const s of sortCases) {
+    test(`products can be sorted by ${s.label}`, async ({ inventoryPage }) => {
+      await inventoryPage.sortBy(s.option);
+      await s.check(inventoryPage);
+    });
+  }
 });
 
 test.describe("Cart", () => {

@@ -1,13 +1,15 @@
 # Playwright Saucedemo Automation Framework
 [![Playwright Tests](https://github.com/Sanvia-Ratry/playwright-saucedemo-automation/actions/workflows/playwright.yml/badge.svg)](https://github.com/Sanvia-Ratry/playwright-saucedemo-automation/actions/workflows/playwright.yml)
 
-A UI and API test automation framework built with **JavaScript, Playwright Test, and the Page Object Model (POM)**. This project demonstrates maintainable test architecture, reusable fixtures, data-driven testing, and automated browser testing for an e-commerce application.
+A UI and API test automation framework built with JavaScript, Playwright Test, and the Page Object Model (POM). This project demonstrates maintainable test architecture, reusable fixtures, and cross-browser automated testing for an e-commerce application.
 
 ## 🚀 Project Overview
 
 This project automates key user journeys on [SauceDemo](https://www.saucedemo.com/) and includes an API test using JSONPlaceholder.
 
 The goal is to demonstrate practical QA automation skills, including functional testing, test organization, reusable page objects, assertions, and continuous integration.
+
+**Scale:** 11 UI tests + 1 API test, run across Chromium, Firefox and WebKit (36 executions per run).
 
 ## 🛠️ Technologies Used
 
@@ -24,7 +26,7 @@ The goal is to demonstrate practical QA automation skills, including functional 
 ## 📂 Project Structure
 
 ```text
-Project-1/
+playwright-saucedemo-automation/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml
@@ -109,7 +111,7 @@ npm ci
 ### 3. Install Playwright Browsers
 
 ```bash
-npx playwright install
+npx playwright install --with-deps
 ```
 
 ### 4. Run All Tests
@@ -150,20 +152,13 @@ The UI tests use the SauceDemo demo application. The API test uses the public JS
 
 Test results can depend on the availability of these external services and the configured browser environment.
 
-## 🎯 Skills Demonstrated
+## 🗺️ Roadmap
 
-- End-to-end test automation
-- API testing
-- JavaScript automation
-- Playwright Test
-- Page Object Model
-- Reusable test fixtures
-- Test data organization
-- Assertions and validation
-- Cross-browser test configuration
-- HTML reporting and trace configuration
-- Git version control
-- CI workflow configuration
+- [ ] Page objects for inventory, cart and checkout
+- [ ] Data-driven negative login tests (empty fields, locked-out user)
+- [ ] Checkout field validation and order total tests
+- [ ] Documented defects from `problem_user` and `error_user`
+- [ ] CI workflow configuration
 
 ## 👨‍💻 About This Project
 

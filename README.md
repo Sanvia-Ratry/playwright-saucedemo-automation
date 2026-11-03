@@ -140,9 +140,9 @@ The report can be opened after a test run has generated it.
 
 ## 🔄 Continuous Integration
 
-This repository includes a GitHub Actions workflow at `.github/workflows/playwright.yml`.
-
-The workflow is intended to run Playwright tests automatically through GitHub Actions. See the repository's **Actions** tab to check the workflow's actual status and results.
+Tests run automatically in GitHub Actions on every push and pull request to `main` or `master`.
+Failed tests are retried twice, a trace is captured on retry, and the HTML report is uploaded as a
+build artifact (kept for 30 days). See the **Actions** tab for run history.
 
 ## 🧪 Test Execution
 

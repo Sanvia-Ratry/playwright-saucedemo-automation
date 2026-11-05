@@ -88,6 +88,10 @@ Tests run automatically in GitHub Actions on every push and pull request to `mai
 
 The tests run against the public SauceDemo site, so results can depend on its availability and on the browser environment.
 
+## 📊 Sample Report
+
+![Playwright HTML report](docs/report.png)
+
 ## 🗺️ Roadmap
 
 - [ ] Tag smoke and regression suites

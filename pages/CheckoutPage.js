@@ -22,6 +22,7 @@ class CheckoutPage {
   async finish() {
     await this.finishButton.click();
   }
+
   async getAmount(locator) {
     const text = await locator.textContent();
     return Number(text.match(/\$([\d.]+)/)[1]);

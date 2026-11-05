@@ -22,6 +22,7 @@ class InventoryPage {
     await this.menuButton.click();
     await this.logoutLink.click();
   }
+
   async addToCart(name) {
     await this.product(name).getByRole("button", { name: "Add to cart" }).click();
   }

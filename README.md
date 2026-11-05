@@ -1,168 +1,98 @@
-# Playwright Saucedemo Automation Framework
+# Playwright SauceDemo Automation Framework
+
 [![Playwright Tests](https://github.com/Sanvia-Ratry/playwright-saucedemo-automation/actions/workflows/playwright.yml/badge.svg)](https://github.com/Sanvia-Ratry/playwright-saucedemo-automation/actions/workflows/playwright.yml)
 
-A UI and API test automation framework built with JavaScript, Playwright Test, and the Page Object Model (POM). This project demonstrates maintainable test architecture, reusable fixtures, and cross-browser automated testing for an e-commerce application.
+A UI test automation framework for the [SauceDemo](https://www.saucedemo.com/) e-commerce demo site, built with **JavaScript, Playwright Test, the Page Object Model (POM) and custom fixtures**. It runs in GitHub Actions on every push and pull request.
 
-## 🚀 Project Overview
-
-This project automates key user journeys on [SauceDemo](https://www.saucedemo.com/) and includes an API test using JSONPlaceholder.
-
-The goal is to demonstrate practical QA automation skills, including functional testing, test organization, reusable page objects, assertions, and continuous integration.
-
-**Scale:** 11 UI tests + 1 API test, run across Chromium, Firefox and WebKit (36 executions per run).
+**Scale:** 23 tests × 3 browsers (Chromium, Firefox, WebKit) = 69 executions per run.
 
 ## 🛠️ Technologies Used
 
-- **JavaScript (ES Modules)**
+- **JavaScript (ES Modules)**, **Node.js and npm**
 - **Playwright Test**
-- **Node.js and npm**
-- **Page Object Model (POM)**
-- **Custom Playwright Fixtures**
-- **API Testing**
-- **HTML Test Reports**
-- **Git and GitHub**
+- **Page Object Model** with **custom fixtures**
+- **Data-driven tests** (test data kept separate from test logic)
+- **HTML test reports** and traces on retry
 - **GitHub Actions** for CI
 
 ## 📂 Project Structure
 
 ```text
 playwright-saucedemo-automation/
-├── .github/
-│   └── workflows/
-│       └── playwright.yml
-├── fixtures/
-│   └── test.js
+├── .github/workflows/playwright.yml   CI workflow
+├── fixtures/test.js                   Custom fixtures (login, inventory, cart, checkout)
 ├── pages/
-│   └── LoginPage.js
-├── test-data/
-│   └── users.js
+│   ├── LoginPage.js
+│   ├── InventoryPage.js
+│   ├── CartPage.js
+│   └── CheckoutPage.js
+├── test-data/users.js                 Users, invalid logins, checkout field cases
 ├── tests/
-│   ├── api.spec.js
-│   ├── inventory.spec.js
-│   └── login.spec.js
-├── .gitignore
-├── package.json
-├── package-lock.json
-└── playwright.config.js
+│   ├── login.spec.js                  8 tests
+│   ├── inventory.spec.js              11 tests
+│   └── checkout.spec.js               4 tests
+├── playwright.config.js
+└── package.json
 ```
 
 ## ✅ Test Coverage
 
-### UI Testing — SauceDemo
+**Login and session (8)**
 
-- Verify that the login page loads correctly.
-- Verify successful login with valid credentials.
-- Verify error handling for an invalid password.
-- Verify that the inventory page is displayed.
-- Verify product sorting by price, low to high.
-- Verify adding products to the cart.
-- Verify removing products from the cart.
-- Verify cart contents.
-- Verify navigation to checkout.
-- Verify checkout information submission.
-- Verify successful order completion.
+- Login page loads; standard user logs in successfully
+- Data-driven login failures: wrong password, empty username, empty password, locked-out user
+- Logout; `/inventory.html` is not accessible without logging in
 
-### API Testing — JSONPlaceholder
+**Inventory and cart (11)**
 
-- Send an HTTP GET request to retrieve users.
-- Verify the HTTP status code.
-- Verify that the response is a non-empty array.
-- Validate required user properties.
-- Verify the data types of key response fields.
+- Inventory page displays products
+- Sorting: name A–Z, name Z–A, price low–high, price high–low
+- Add to cart, remove from cart, cart shows the added product
+- Cart to checkout, submit checkout information, complete an order
+
+**Checkout validation (4)**
+
+- Missing first name, last name or postal code shows the correct error
+- Order total equals item total plus tax
 
 ## 🏗️ Framework Design
 
-### Page Object Model (POM)
-
-The `pages/` directory contains page classes that encapsulate page locators and user interactions. This separates page-specific implementation from test logic and makes the framework easier to maintain.
-
-### Custom Fixtures
-
-The `fixtures/test.js` file provides a reusable `loginPage` fixture, allowing tests to access the login page object without repeatedly creating it.
-
-### Test Data Management
-
-The `test-data/users.js` file centralizes login test data, making test cases easier to read and update.
-
-### Playwright Configuration
-
-The `playwright.config.js` file configures the test directory, browser projects, base URL, HTML reporting, and trace collection on the first retry.
+- **Page Object Model:** `pages/` holds one class per page, with locators and user actions, so tests read like user stories and a selector change is fixed in one place.
+- **Custom fixtures:** `fixtures/test.js` provides `loginPage`, `inventoryPage` (already logged in as the standard user), `cartPage` and `checkoutPage`.
+- **Test data:** `test-data/users.js` holds credentials plus the arrays that drive the login and checkout tests.
+- **Configuration:** `playwright.config.js` sets the base URL, three browser projects, 2 retries on CI, an HTML report and a trace on first retry.
 
 ## ⚙️ Getting Started
 
-### Prerequisites
-
-- Node.js installed
-- npm installed
-- Git installed
-
-### 1. Clone the Repository
-
 ```bash
 gh repo clone Sanvia-Ratry/playwright-saucedemo-automation
-```
-
-### 2. Install Dependencies
-
-```bash
+cd playwright-saucedemo-automation
 npm ci
-```
-
-### 3. Install Playwright Browsers
-
-```bash
 npx playwright install --with-deps
 ```
 
-### 4. Run All Tests
+## ▶️ Running the Tests
 
 ```bash
-npm test
+npm test                # all tests, all browsers
+npm run test:chromium   # Chromium only
+npm run test:headed     # watch the browser
+npm run test:report     # open the HTML report
 ```
-
-### 5. Run Tests in Chromium
-
-```bash
-npm run test:chromium
-```
-
-### 6. Run Tests in Headed Mode
-
-```bash
-npm run test:headed
-```
-
-### 7. View the HTML Test Report
-
-```bash
-npm run test:report
-```
-
-The report can be opened after a test run has generated it.
 
 ## 🔄 Continuous Integration
 
-Tests run automatically in GitHub Actions on every push and pull request to `main` or `master`.
-Failed tests are retried twice, a trace is captured on retry, and the HTML report is uploaded as a
-build artifact (kept for 30 days). See the **Actions** tab for run history.
+Tests run automatically in GitHub Actions on every push and pull request to `main` or `master`. Failed tests are retried twice, a trace is captured on retry, and the HTML report is uploaded as a build artifact (kept for 30 days). See the **Actions** tab for run history.
 
-## 🧪 Test Execution
+## 🧪 Notes on Test Execution
 
-The UI tests use the SauceDemo demo application. The API test uses the public JSONPlaceholder service.
-
-Test results can depend on the availability of these external services and the configured browser environment.
+The tests run against the public SauceDemo site, so results can depend on its availability and on the browser environment.
 
 ## 🗺️ Roadmap
 
-- [ ] Page objects for inventory, cart and checkout
-- [ ] Data-driven negative login tests (empty fields, locked-out user)
-- [ ] Checkout field validation and order total tests
-- [ ] Documented defects from `problem_user` and `error_user`
-- [ ] CI workflow configuration
-
-## 👨‍💻 About This Project
-
-This project is part of my QA Automation portfolio, demonstrating how to structure, execute, and maintain automated tests for web applications and APIs.
+- [ ] Tag smoke and regression suites
+- [ ] Add mobile viewport projects
+- [ ] Add visual regression checks
 
 ---
 
